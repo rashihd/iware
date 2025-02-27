@@ -489,9 +489,9 @@ nav ul li a.active::after {
 }
 
 .values-header {
-    font-size: 24px;
+    font-size: 22px;
     color: var(--secondary-color);
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -503,15 +503,15 @@ nav ul li a.active::after {
 
 .values-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
 }
 
 .value-item {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(99, 102, 241, 0.1);
-    padding: 25px;
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
@@ -523,30 +523,31 @@ nav ul li a.active::after {
 }
 
 .value-icon {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     background: var(--light-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .value-icon i {
-    font-size: 24px;
+    font-size: 20px;
     color: var(--accent-color);
 }
 
 .value-item h3 {
-    font-size: 20px;
+    font-size: 18px;
     color: var(--secondary-color);
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .value-item p {
     color: var(--text-color);
-    line-height: 1.6;
+    line-height: 1.5;
+    font-size: 14px;
 }
 
 @media screen and (max-width: 992px) {
