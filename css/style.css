@@ -788,17 +788,47 @@ nav ul li a.active::after {
     color: var(--accent-color);
 }
 
+/* Improved responsive styles for projects section */
+@media screen and (max-width: 1200px) {
+    .projects {
+        padding: 80px 0;
+    }
+    
+    .project-card {
+        gap: 30px;
+    }
+    
+    .project-details {
+        padding: 30px;
+    }
+}
+
 @media screen and (max-width: 992px) {
+    .projects-grid {
+        gap: 40px;
+    }
+    
     .project-card {
         flex-direction: column;
+        gap: 0;
     }
 
     .project-image {
         height: 300px;
+        flex: none;
+        width: 100%;
+    }
+    
+    .project-details h3 {
+        font-size: 24px;
     }
 }
 
 @media screen and (max-width: 768px) {
+    .projects {
+        padding: 60px 0;
+    }
+    
     .project-stats {
         flex-direction: column;
         gap: 10px;
@@ -806,6 +836,42 @@ nav ul li a.active::after {
     
     .project-details {
         padding: 25px;
+    }
+    
+    .project-tech {
+        gap: 8px;
+    }
+    
+    .tech-tag {
+        padding: 4px 10px;
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .projects-grid {
+        gap: 30px;
+    }
+    
+    .project-image {
+        height: 220px;
+    }
+    
+    .project-details {
+        padding: 20px;
+    }
+    
+    .project-details h3 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .project-description {
+        font-size: 14px;
+    }
+    
+    .project-features li {
+        font-size: 14px;
     }
 }
 
