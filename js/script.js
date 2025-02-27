@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     dots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
             clearInterval(slideTimer);
-            setActiveSlide(index);
+            updateSlide(index);
             startSlideTimer();
         });
     });
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (prevIndex < 0) {
                 prevIndex = slides.length - 1;
             }
-            setActiveSlide(prevIndex);
+            updateSlide(prevIndex);
             startSlideTimer();
         });
     }
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (nextIndex >= slides.length) {
                 nextIndex = 0;
             }
-            setActiveSlide(nextIndex);
+            updateSlide(nextIndex);
             startSlideTimer();
         });
     }
@@ -138,11 +138,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if(contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            const hideLoading = showLoadingAnimation(this);
             
-            // In a real implementation, you would send the form data to a server
-            // For this static site, we'll just show an alert
-            alert('Thank you for your message! We will get back to you soon.');
-            this.reset();
+            // Simulate form submission delay
+            setTimeout(() => {
+                hideLoading();
+                alert('Thank you for your message! We will get back to you soon.');
+                this.reset();
+            }, 1500);
         });
     }
     
@@ -152,11 +155,96 @@ document.addEventListener('DOMContentLoaded', function() {
     if(newsletterForm) {
         newsletterForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            const hideLoading = showLoadingAnimation(this);
             
-            // In a real implementation, you would send this to a server
-            // For now, we'll just show an alert
-            alert('Thank you for subscribing to our newsletter!');
-            this.reset();
+            setTimeout(() => {
+                hideLoading();
+                alert('Thank you for subscribing to our newsletter!');
+                this.reset();
+            }, 1500);
         });
+    }
+
+    // Scroll Animation Function
+    function animateOnScroll() {
+        const elements = document.querySelectorAll('.service-card, .portfolio-item, .stat-item, .value-item');
+        elements.forEach((element, index) => {
+            // Set animation delay based on index
+            element.style.setProperty('--index', index);
+            
+            const elementTop = element.getBoundingClientRect().top;
+            const elementBottom = element.getBoundingClientRect().bottom;
+            
+            if (elementTop < window.innerHeight - 100 && elementBottom > 0) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }
+        });
+    }
+
+    // Initial check for elements in view
+    animateOnScroll();
+    
+    // Add scroll event listener with throttle
+    let scrollTimeout;
+    window.addEventListener('scroll', function() {
+        if (!scrollTimeout) {
+            scrollTimeout = setTimeout(function() {
+                animateOnScroll();
+                scrollTimeout = null;
+            }, 50);
+        }
+    });
+
+    // Enhance slider transitions
+    function updateSlide(index) {
+        const activeSlide = document.querySelector('.slide.active');
+        const nextSlide = slides[index];
+        
+        // Add transition classes
+        activeSlide.classList.add('sliding-out');
+        nextSlide.classList.add('sliding-in');
+        
+        setTimeout(() => {
+            setActiveSlide(index);
+            activeSlide.classList.remove('sliding-out');
+            nextSlide.classList.remove('sliding-in');
+        }, 600);
+    }
+
+    // Parallax effect for hero section
+    const hero = document.querySelector('.hero');
+    if(hero) {
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            hero.style.backgroundPosition = `center ${scrolled * 0.5}px`;
+        });
+    }
+
+    // Enhance form interactions
+    const formInputs = document.querySelectorAll('.form-group input, .form-group textarea');
+    formInputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        
+        input.addEventListener('blur', function() {
+            if (!this.value) {
+                this.parentElement.classList.remove('focused');
+            }
+        });
+    });
+
+    // Add loading animation for form submission
+    function showLoadingAnimation(form) {
+        const button = form.querySelector('button[type="submit"]');
+        const originalText = button.innerText;
+        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        button.disabled = true;
+        
+        return function hideLoading() {
+            button.innerHTML = originalText;
+            button.disabled = false;
+        };
     }
 });
